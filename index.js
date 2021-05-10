@@ -59,9 +59,8 @@ app.use("/api", routes)
 io.on('connection', (socket) => {
     socket.on("login", (username)=>{
       userJoin(socket.id, username);
-      socket.broadcast.emit("user-online", username);
+      // socket.broadcast.emit("user-online", username);
     });
-
     socket.on("send-message", (message)=> {
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
       const receiver = getUserByUsername(message.to);
@@ -89,7 +88,7 @@ io.on('connection', (socket) => {
     });
     socket.on("disconnect", ()=>{
       userLeave(socket.id);
-      io.emit("user-offline");
+      // socket.broadcast.emit("user-offline", username);
     });
 });
 

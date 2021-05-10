@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors')
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false,
@@ -12,6 +13,7 @@ module.exports = {
         primary: {
           blue: "#3B82F6",
         },
+        "blue-gray" : colors.blueGray,
       },
       fontFamily: {
         inter: ["Inter", "ui-serif"],

@@ -22,8 +22,8 @@ router.post("/login",(req,res)=>{
 
 router.post("/signup",(req,res)=>{
     if(!req.body.username ||  !req.body.password || !req.body.firstname || !req.body.lastname) return res.sendStatus(400);
-    const sql = "INSERT INTO `users` (`username`, `password`, `firstname`, `lastname`) VALUES(?,?,?,?)";
-    connection.query(sql, [req.body.username, req.body.password,req.body.firstname, req.body.lastname], function(err,results){
+    const sql = "INSERT INTO `users` (`username`, `password`, `email`) VALUES(?,?,?)";
+    connection.query(sql, [req.body.username, req.body.password, req.body.email], function(err,results){
         if(err) return res.sendStatus(400);
         req.session.username = req.body.username;
         res.send(req.body.username);
@@ -33,8 +33,8 @@ router.post("/signup",(req,res)=>{
 router.get("/conversations/:user", (req, res)=>{
     const user = req.params.user;
     console.log(user);
-    const sql = "SELECT DISTINCT u.username FROM `users` u, `messages` m WHERE (m.to = ? OR m.from = ?) AND (m.to = u.username OR m.from = u.username) AND NOT u.username = ?";
-    connection.query(sql, [user, user, user], function(err,results){
+    const sql = "SELECT m.content, latest.username FROM messages m JOIN (SELECT MAX(`timestamp`) AS `timestamp`, CASE WHEN m.from = ? THEN m.to ELSE m.from END AS `username` from messages m GROUP BY `username`) latest on m.timestamp=latest.timestamp GROUP BY `username`";   
+    connection.query(sql, [user], function(err,results){
         if(err) return res.sendStatus(400);
         res.send(results);
     });

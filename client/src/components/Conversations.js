@@ -19,9 +19,11 @@ const Conversations = ({id, search}) => {
         if(!defaultUsers) return;
         setUsers(defaultUsers.filter((user)=> user.username.toLowerCase().includes(search.toLowerCase())))
     },[search])
+
+
     return (
         <div className="overflow-auto flex flex-1 flex-col overflow-x-hidden space-y-1">
-            {users ? users.map((user)=> <User active={user.username === id} username={user.username}></User>) : <p>Hirtensepp</p>}
+            {users ? users.map((user)=> <User active={user.username === id} user={user}></User>) : <p>Hirtensepp</p>}
         </div>
     )
 }

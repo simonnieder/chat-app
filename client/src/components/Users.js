@@ -16,12 +16,13 @@ const Users = ({id, search}) => {
     },[])
     useEffect(()=>{
         if(!defaultUsers) return;
+
         setUsers(defaultUsers.filter((user)=> user.username.toLowerCase().includes(search.toLowerCase())))
     },[search])
     return (
-        <div className="space-y-1">
-            {users && users.map((user)=> <User active={id === user.username} username={user.username}></User>)}
-        </div>
+        <div className="space-y-1 scroll" >
+            {users && users.map((user)=> <User active={id === user.username} user={user}></User>)}
+        </div>  
     )
 }
 

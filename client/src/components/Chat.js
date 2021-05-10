@@ -31,7 +31,7 @@ const Chat = ({id}) => {
 
     return (
         <div className="flex flex-col w-full max-w-3xl flex-1 min-h-0 px-1">
-            <div className="overflow-auto flex flex-1 flex-col-reverse overflow-x-hidden">
+            <div className="overflow-auto scroll flex flex-1 flex-col-reverse overflow-x-hidden">
                 {chat && chat.slice().reverse().map((message, index)=>{
                     return (<Message message={message} ownMessage={user === message.from} key={index}>{message.content}</Message>);
                 })}

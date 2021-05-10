@@ -10,8 +10,7 @@ const Signup = () => {
     const history = useHistory();
     const [form, setForm] = useState({
         firstname: "",
-        lastname: "",
-        username: "",
+        email: "",
         password: "",
         confirmPassword: "",
         error: "",
@@ -20,7 +19,9 @@ const Signup = () => {
     const onSubmit = (e)=>{
         e.preventDefault();
         setForm({...form, error: ""});
+        
         if(form.password !== form.confirmPassword) return setForm({...form, error: "Passwords don't match!"});
+        if(form.password.length < 8) return setForm({...form, error: "Password too short. Use at least 8 characters"});
         axios.post(`${REACT_APP_API_ENDPOINT}/user/signup`,form, { withCredentials: true }).then(res=>{
             setUser(res.data.username);
             history.push("/");
@@ -36,16 +37,15 @@ const Signup = () => {
     }
 
     return (
-        <div className="w-full h-screen flex items-center justify-center bg-gray-300">
+        <div className="w-full h-screen flex items-center justify-center bg-blue-gray-100">
             <div className="bg-white flex flex-col items-center max-w-md p-10 rounded-2xl space-y-2 w-full">
-                <h1 className="text-3xl text-gray-800 font-roboto font-medium ">Create your account!</h1>
-                <p className="text-lg text-gray-800 font-roboto ">Already have an account? <Link to="/login" className="text-primary-blue underline">Log in!</Link> </p>
+                <h1 className="text-3xl text-blue-gray-800 font-roboto font-medium text-center ">Create your account!</h1>
+                <p className="text-lg text-blue-gray-700 font-roboto text-center ">Already have an account? <Link to="/login" className="text-primary-blue underline">Log in!</Link> </p>
                 <form onSubmit={onSubmit} className="w-full space-y-2 flex flex-col items-center">
-                    <Input title="First name" placeholder="Enter your first name" value={form.firstname} onChange={(value)=>setForm({...form, firstname: value})}></Input>
-                    <Input title="Last name" placeholder="Enter your last name" value={form.lastname} onChange={(value)=>setForm({...form, lastname: value})}></Input>
-                    <Input title="Username" placeholder="Enter your username" value={form.username} onChange={(value)=>setForm({...form, username: value})}></Input>
-                    <Input title="Password" type="password" placeholder="Enter your password" value={form.password} onChange={(value)=>setForm({...form, password: value})}></Input>
-                    <Input title="Confirm password" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={(value)=>setForm({...form, confirmPassword: value})}></Input>
+                    <Input required full title="Username" placeholder="Enter your username" value={form.username} onChange={(value)=>setForm({...form, username: value, error:""})}></Input>
+                    <Input required full title="Email" placeholder="Enter your Email" value={form.email} onChange={(value)=>setForm({...form, email: value, error:""})}></Input>
+                    <Input required full title="Password" type="password" placeholder="Enter your password" value={form.password} onChange={(value)=>setForm({...form, password: value, error:""})}></Input>
+                    <Input required full title="Confirm password" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={(value)=>setForm({...form, confirmPassword: value, error:""})}></Input>
                     {form.error && <p className="font-inter font-normal text-red-500 text-md">{form.error}</p>}
                     <Button full primary>sign up</Button>
                 </form>

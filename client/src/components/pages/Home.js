@@ -20,7 +20,7 @@ const Home = ({ match }) => {
         return <Redirect to="/login"></Redirect>
     }
     return (
-        <div className="flex h-screen">
+        <div className="flex h-screen max-h-screen bg-blue-gray-50">
             <Sidebar id={id}></Sidebar>
 
             {id ?
@@ -29,8 +29,8 @@ const Home = ({ match }) => {
                 <Chat id={id}></Chat> 
             </div>:
             <div className="flex flex-col justify-center items-center w-full">
-                <h1 className="text-2xl md:text-4xl font-roboto font-medium text-gray-700 text-center mb-5">Click on a user to start chatting</h1>
-                <BsArrowLeft className="text-6xl font-bold text-gray-700"></BsArrowLeft>
+                <h1 className="text-2xl md:text-4xl font-roboto font-medium text-blue-gray-700 text-center mb-5">Click on a user to start chatting</h1>
+                <BsArrowLeft className="text-6xl font-bold text-blue-gray-700"></BsArrowLeft>
             </div>
             }
         </div>

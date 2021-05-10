@@ -17,7 +17,7 @@ const Inputbar = ({id}) => {
     }
     
     return (
-        <form onSubmit={submitForm} className="w-full py-3 px-1 space-x-2 justify-center flex flex-nowrap">
+        <form onSubmit={submitForm} className="w-full py-3 space-x-2 justify-center flex flex-nowrap">
           <Input full placeholder="Type your message" value={message} onChange={setMessage}></Input>
           <Button primary><span className="mr-2 hidden md:block">send</span><IoMdSend ></IoMdSend></Button>
         </form>
