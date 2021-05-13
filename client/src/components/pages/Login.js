@@ -32,7 +32,7 @@ const Login = () => {
     }
     return (
         <div className="w-full h-screen flex items-center justify-center bg-blue-gray-100">
-            <form onSubmit={onSubmit} className="bg-white flex flex-col items-center max-w-md p-10 rounded-lg space-y-2 w-full">
+            <form onSubmit={onSubmit} className="bg-white flex flex-col items-center max-w-md p-10 rounded-lg space-y-2 w-full shadow-md">
                 <h1 className="text-3xl text-blue-gray-800 font-roboto font-medium text-center ">Log in to account!</h1>
                 <h1 className="text-lg text-blue-gray-700 font-roboto ">No account? <Link to="/signup" className="text-primary-blue underline">Sign up!</Link> </h1>
                 <Input required full value={form.username} onChange={(value)=> setForm({...form, username: value})} title="Username" placeholder="Enter your name"></Input>

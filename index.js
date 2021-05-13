@@ -65,7 +65,6 @@ io.on('connection', (socket) => {
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
       const receiver = getUserByUsername(message.to);
       const sender = getUserByUsername(message.from);
-      console.log(sender, receiver);
       if(sender){
         io.to([sender.id]).emit("incoming-message", {
           content: message.content,

@@ -19,7 +19,7 @@ const Sidebar = ({id}) => {
         setSearch("")
     }, [mode])
     return (
-        <div className="max-w-sm w-full bg-blue-gray-500 bg-opacity-10 space-y-2 flex flex-col">
+        <div className="max-w-xs w-full bg-blue-gray-500 bg-opacity-10 space-y-2 flex flex-col">
             <div className="flex items-center justify-between h-20 px-5 border-b border-gray-300 flex-shrink-0">
                 <div className="flex items-center">
                     <Avatar username={user}></Avatar>

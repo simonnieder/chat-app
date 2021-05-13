@@ -13,7 +13,6 @@ const Chat = ({id}) => {
     useEffect(()=>{
         if(!socket) return;
         socket.on("incoming-message", (message)=>{
-            console.log("new message", message)
             setChat((chat)=>[...chat, message]);
         });
         return () =>{
