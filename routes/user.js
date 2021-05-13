@@ -39,7 +39,6 @@ router.post("/signup",(req,res)=>{
 
 router.get("/conversations/:user", (req, res)=>{
     const user = req.params.user;
-    console.log(user);
     const sql = "SELECT m.content, latest.username FROM messages m JOIN (SELECT MAX(`timestamp`) AS `timestamp`, CASE WHEN m.from = ? THEN m.to ELSE m.from END AS `username` from messages m GROUP BY `username`) latest on m.timestamp=latest.timestamp GROUP BY `username`";   
     connection.query(sql, [user], function(err,results){
         if(err) return res.sendStatus(400);

@@ -9,7 +9,6 @@ const Signup = () => {
     const [user, setUser] = useContext(UserContext);
     const history = useHistory();
     const [form, setForm] = useState({
-        firstname: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -23,7 +22,7 @@ const Signup = () => {
         if(form.password !== form.confirmPassword) return setForm({...form, error: "Passwords don't match!"});
         if(form.password.length < 8) return setForm({...form, error: "Password too short. Use at least 8 characters"});
         axios.post(`${REACT_APP_API_ENDPOINT}/user/signup`,form, { withCredentials: true }).then(res=>{
-            setUser(res.data.username);
+            setUser(res.data);
             history.push("/");
         }).catch((err)=>{
             if(!err.response) return setForm({...form, error: "Server not reachable!"});
@@ -38,7 +37,7 @@ const Signup = () => {
 
     return (
         <div className="w-full h-screen flex items-center justify-center bg-blue-gray-100">
-            <div className="bg-white flex flex-col items-center max-w-md p-10 rounded-2xl space-y-2 w-full">
+            <div className="bg-white flex flex-col items-center max-w-md p-10 rounded-2xl space-y-2 w-full shadow-md">
                 <h1 className="text-3xl text-blue-gray-800 font-roboto font-medium text-center ">Create your account!</h1>
                 <p className="text-lg text-blue-gray-700 font-roboto text-center ">Already have an account? <Link to="/login" className="text-primary-blue underline">Log in!</Link> </p>
                 <form onSubmit={onSubmit} className="w-full space-y-2 flex flex-col items-center">
