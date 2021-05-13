@@ -1,4 +1,6 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 const router = express.Router();
 const connection = require("../database/connection")
 
@@ -13,20 +15,25 @@ router.post("/login",(req,res)=>{
         if(err || results?.length == 0) return res.status(400).json({error: "Could not get user from database."})
         const user = results[0];
 
-        if(user.password !== password) return res.sendStatus(400);
-        req.session.userId = req.body.username;
-        req.session.save(()=>res.send({username: user.username}));
-
+        bcrypt.compare(password, user.password, function(err, result) {
+            if(!result) return res.sendStatus(400);
+            req.session.userId = req.body.username;
+            req.session.save(()=>res.send({username: user.username}));
+        });        
     });
 });
 
 router.post("/signup",(req,res)=>{
-    if(!req.body.username ||  !req.body.password || !req.body.firstname || !req.body.lastname) return res.sendStatus(400);
+    if(!req.body.username ||  !req.body.password || !req.body.email) return res.sendStatus(400);
     const sql = "INSERT INTO `users` (`username`, `password`, `email`) VALUES(?,?,?)";
-    connection.query(sql, [req.body.username, req.body.password, req.body.email], function(err,results){
-        if(err) return res.sendStatus(400);
-        req.session.username = req.body.username;
-        res.send(req.body.username);
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, function(err, hash) {
+            connection.query(sql, [req.body.username, hash, req.body.email], function(err,results){
+                if(err) return res.sendStatus(400);
+                req.session.username = req.body.username;
+                res.send(req.body.username);
+            });
+        });
     });
 });
 
