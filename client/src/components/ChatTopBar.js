@@ -1,11 +1,13 @@
 import Avatar from "./Avatar"
 import User from "./User"
-
-const ChatTopBar = ({id}) => {
+import {BsArrowLeft} from "react-icons/bs"
+import { Link } from "react-router-dom"
+const ChatTopBar = ({id, isBigScreen}) => {
     return (
-        <div className="w-full  border-b border-gray-200 h-20 flex items-center px-5">
+        <div className="w-full  border-b border-gray-200 h-20 flex items-center px-5 space-x-3">
+             {!isBigScreen && <Link to="/" ><BsArrowLeft className="text-3xl font-bold text-blue-gray-700"></BsArrowLeft></Link> }
                 <Avatar username={id}></Avatar>
-                <span className=" text-gray-700 font-roboto font-medium text-3xl ml-3">{id}</span>
+                <span className=" text-gray-700 font-roboto font-medium text-3xl ">{id}</span>
         </div>
     )
 }

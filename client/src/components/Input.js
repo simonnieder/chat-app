@@ -1,7 +1,7 @@
 const Input = ({value, onChange, placeholder, title, full, type="text", error, required, search}) => {
     return (
         <div className={`${full ? "w-full" : "max-w-sm w-full"} flex flex-col`}>
-            <label className="font-roboto font-medium text-sm text-neutrals-300">{title}</label>
+            <label className="font-roboto font-bold text-xs text-neutrals-300 uppercase">{title}</label>
             <div className="relative focus-within:text-primary-blue text-blue-gray-500">
                 <input required={required} type={type} className={`w-full rounded-lg outline-none text-blue-gray-700 bg-blue-gray-500 placeholder-blue-gray-800 placeholder-opacity-50 bg-opacity-10 py-1  border-2 ${error ?  "border-red-500" : "border-transparent focus:border-primary-blue"}  focus:bg-blue-gray-100 focus:bg-opacity-80 font-roboto ${search ? "pl-9 pr-3" : "px-3"}`} value={value} onChange={(e)=>onChange(e.target.value)} placeholder={placeholder}></input>
                 {search&&
