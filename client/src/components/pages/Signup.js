@@ -4,6 +4,7 @@ import { Link, Redirect, useHistory } from "react-router-dom"
 import { UserContext } from "../../Context/UserContext"
 import Button from "../Button"
 import Input from "../Input"
+import InputError from "../InputError"
 const { REACT_APP_API_ENDPOINT } = process.env;
 const Signup = () => {
     const [user, setUser] = useContext(UserContext);
@@ -45,7 +46,7 @@ const Signup = () => {
                     <Input required full title="Email" placeholder="Enter your Email" value={form.email} onChange={(value)=>setForm({...form, email: value, error:""})}></Input>
                     <Input required full title="Password" type="password" placeholder="Enter your password" value={form.password} onChange={(value)=>setForm({...form, password: value, error:""})}></Input>
                     <Input required full title="Confirm password" type="password" placeholder="Confirm your password" value={form.confirmPassword} onChange={(value)=>setForm({...form, confirmPassword: value, error:""})}></Input>
-                    {form.error && <p className="font-inter font-normal text-red-500 text-md">{form.error}</p>}
+                    {form.error && <InputError msg={form.error}></InputError>}
                     <Button full primary>sign up</Button>
                 </form>
             </div>

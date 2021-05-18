@@ -4,6 +4,7 @@ import Button from "../Button"
 import Input from "../Input"
 import axios from "axios"
 import { UserContext } from "../../Context/UserContext"
+import InputError from "../InputError"
 const { REACT_APP_API_ENDPOINT } = process.env;
 const Login = () => {
     const [user, setUser] = useContext(UserContext);
@@ -38,12 +39,7 @@ const Login = () => {
                 <h1 className="text-lg text-blue-gray-700 font-roboto ">No account? <Link to="/signup" className="text-primary-blue underline">Sign up!</Link> </h1>
                 <Input required full value={form.username} onChange={(value)=> setForm({...form, username: value})} title="Username" placeholder="Enter your name"></Input>
                 <Input required full value={form.password} onChange={(value)=> setForm({...form, password: value})} title="Password" type="password" placeholder="Enter your password"></Input>
-                {form.error && 
-                <div className="font-inter font-normal text-red-600 bg-red-100 text-md p-2 w-full rounded-lg flex items-center space-x-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p>{form.error}</p></div>}
+                {form.error && <InputError msg={form.error}></InputError>}
                 <Button primary full loading={form.loading}>login</Button>
             </form>
         </div>

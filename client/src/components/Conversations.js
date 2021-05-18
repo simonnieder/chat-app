@@ -23,7 +23,7 @@ const Conversations = ({id, search}) => {
 
     return (
         <div className="overflow-auto flex flex-1 flex-col overflow-x-hidden space-y-1">
-            {users ? users.map((user)=> <User active={user.username === id} user={user}></User>) : <p>Hirtensepp</p>}
+            {users ? users.map((user)=> <User active={user.username === id} user={user}></User>) : <p className="text-center text-blue-gray-800 font-roboto font-medium text-md ">No users</p>}
         </div>
     )
 }

@@ -6,7 +6,7 @@ import { SocketContext } from "../Context/SocketContext";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
 const { REACT_APP_API_ENDPOINT } = process.env;
-const Chat = ({id}) => {
+const Chat = ({id, refresh}) => {
     const [chat, setChat] = useState([]);
     const socket = useContext(SocketContext);
     const [user, setUser] = useContext(UserContext);
@@ -14,6 +14,7 @@ const Chat = ({id}) => {
         if(!socket) return;
         socket.on("incoming-message", (message)=>{
             setChat((chat)=>[...chat, message]);
+            refresh();
         });
         return () =>{
             socket.off("incoming-message");

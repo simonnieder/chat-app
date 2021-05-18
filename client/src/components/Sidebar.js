@@ -6,7 +6,7 @@ import Conversations from "./Conversations"
 import Input from "./Input"
 import TabSwitcher from "./TabButton"
 import Users from "./Users"
-const Sidebar = ({id, isBigScreen}) => {
+const Sidebar = ({id, isBigScreen, refresh}) => {
     const [mode, setMode] = useState("conversations");
     const [search, setSearch] = useState("");
     const [user, setUser] = useContext(UserContext);
@@ -17,7 +17,7 @@ const Sidebar = ({id, isBigScreen}) => {
 
     useEffect(() => {
         setSearch("")
-    }, [mode])
+    }, [mode, refresh])
     return (
         <div className={`${isBigScreen && "max-w-xs"} w-full bg-blue-gray-500 bg-opacity-10 space-y-2 flex flex-col`}>
             <div className="flex items-center justify-between h-20 px-5 border-b border-gray-300 flex-shrink-0">
