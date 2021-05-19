@@ -18,12 +18,13 @@ const Conversations = ({id, search}) => {
     useEffect(()=>{
         if(!defaultUsers) return;
         setUsers(defaultUsers.filter((user)=> user.username.toLowerCase().includes(search.toLowerCase())))
+        console.log(users)
     },[search])
 
 
     return (
         <div className="overflow-auto flex flex-1 flex-col overflow-x-hidden space-y-1">
-            {users ? users.map((user)=> <User active={user.username === id} user={user}></User>) : <p className="text-center text-blue-gray-800 font-roboto font-medium text-md ">No users</p>}
+            {users?.length > 0 ? users.map((user)=> <User active={user.username === id} user={user}></User>) : <p className="text-center text-blue-gray-700 font-roboto font-medium text-md ">No users found!</p> }
         </div>
     )
 }

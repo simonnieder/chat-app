@@ -21,7 +21,7 @@ const Users = ({id, search}) => {
     },[search])
     return (
         <div className="space-y-1 scroll" >
-            {users && users.map((user)=> <User active={id === user.username} user={user}></User>)}
+            {users?.length ? users.map((user)=> <User active={id === user.username} user={user}></User>): <p className="text-center text-blue-gray-700 font-roboto font-medium text-md ">No users found!</p>}
         </div>  
     )
 }

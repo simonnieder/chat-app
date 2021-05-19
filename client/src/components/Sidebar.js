@@ -1,3 +1,4 @@
+import { AnimateSharedLayout } from "framer-motion"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../Context/UserContext"
 import Avatar from "./Avatar"
@@ -27,10 +28,13 @@ const Sidebar = ({id, isBigScreen, refresh}) => {
                 </div>
             </div>
             <div className="space-y-3 flex flex-col min-h-0 p-5 h-full">
-                <div className="flex items-center justify-center space-x-2">                
-                    <TabSwitcher mode={"conversations"} currentMode={mode} onClick={()=>setMode("conversations")}></TabSwitcher>
-                    <TabSwitcher mode={"users"} currentMode={mode} onClick={()=>setMode("users")}></TabSwitcher>
-                </div>
+                <AnimateSharedLayout>
+                    <div className="flex items-center justify-center bg-blue-gray-700 bg-opacity-10 rounded-xl p-1">                
+                        <TabSwitcher mode={"conversations"} currentMode={mode} onClick={()=>setMode("conversations")}></TabSwitcher>
+                        <TabSwitcher mode={"users"} currentMode={mode} onClick={()=>setMode("users")}></TabSwitcher>
+                    </div>
+                </AnimateSharedLayout>
+
                 <Input put search value={search} onChange={setSearch} placeholder={mode === "conversations" ? "Search for conversations" : "Search for users"}></Input>
                 <div className="overflow-y-auto flex-1 scroll">
                     {mode === "conversations" ? 
