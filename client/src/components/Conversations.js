@@ -20,7 +20,14 @@ const Conversations = ({id, search}) => {
     useEffect(()=>{
         if(!socket) return;
         socket.on("user-state-change", (user)=>{
+            setDefaultUsers((users)=>{
+                if(!users)return [];
+                const currentUser = users.find((u)=>u.username===user.username);
+                const returnUsers = users.filter((u)=>u.username !== user.username);
+                return [{...currentUser, online: user.online},...returnUsers];
+            })
             setFilteredUsers((users)=>{
+                if(!users)return [];
                 const currentUser = users.find((u)=>u.username===user.username);
                 const returnUsers = users.filter((u)=>u.username !== user.username);
                 return [{...currentUser, online: user.online},...returnUsers];
