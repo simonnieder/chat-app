@@ -5,7 +5,7 @@ import Avatar from "./Avatar"
 import Button from "./Button"
 import Conversations from "./Conversations"
 import Input from "./Input"
-import TabSwitcher from "./TabButton"
+import TabSwitcher from "./TabSwitcher"
 import Users from "./Users"
 const Sidebar = ({id, isBigScreen, refresh}) => {
     const [mode, setMode] = useState("conversations");
