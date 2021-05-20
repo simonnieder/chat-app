@@ -3,6 +3,9 @@
 @tailwind base;
 @tailwind components;
 
+.p-3px{
+    padding: 4px;
+}
 .fit-content{
     width: fit-content;
 }
