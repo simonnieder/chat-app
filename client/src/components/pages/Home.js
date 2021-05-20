@@ -14,9 +14,9 @@ const Home = ({ match }) => {
     const [refresh, setRefresh] = useState(false);
     const isBigScreen = useMediaQuery({minWidth: 640 })
     useEffect(()=>{
-        if(!user) return;
+        if(!user || !socket) return;
         socket.emit("login", user);
-    },[user]);
+    },[user,socket]);
     
     if(!user){
         return <Redirect to="/login"></Redirect>

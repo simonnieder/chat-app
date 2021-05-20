@@ -5,36 +5,40 @@ import { UserContext } from "../Context/UserContext";
 import User from "./User";
 const { REACT_APP_API_ENDPOINT } = process.env;
 const Conversations = ({id, search}) => {
-    const [user] = useContext(UserContext);
-    const [users, setUsers] = useState();
-    const socket = useContext(SocketContext);
     const [defaultUsers, setDefaultUsers] = useState();
+    const [filteredUsers, setFilteredUsers] = useState();
+    const [user] = useContext(UserContext);
+    const socket = useContext(SocketContext);
 
     useEffect(()=>{
         axios.get(`${REACT_APP_API_ENDPOINT}/user/conversations/${user}`).then((res)=>{
             setDefaultUsers(res.data);  
-            setUsers(res.data);
+            setFilteredUsers(res.data);
         });
     },[])
 
     useEffect(()=>{
         if(!socket) return;
-        socket.on("user-leave", (username)=>{
+        socket.on("user-state-change", (user)=>{
+            setFilteredUsers((users)=>{
+                const currentUser = users.find((u)=>u.username===user.username);
+                const returnUsers = users.filter((u)=>u.username !== user.username);
+                return [{...currentUser, online: user.online},...returnUsers];
+            })
         });
         return () =>{
-            socket.off("user-leave");
+            socket.off("user-state-change");
         }
     },[socket]);
 
     useEffect(()=>{
         if(!defaultUsers) return;
-        setUsers(defaultUsers.filter((user)=> user.username.toLowerCase().includes(search.toLowerCase())))
-        console.log(users)
+        setFilteredUsers(defaultUsers.filter((user)=> user.username.toLowerCase().includes(search.toLowerCase())))
     },[search])
 
     return (
         <div className="overflow-auto flex flex-1 flex-col overflow-x-hidden pb-1">
-            {users?.length > 0 ? users.sort((a,b)=> b.id - a.id).map((user)=> <User active={user.username === id} online={user.online} user={user}></User>) : <p className="text-center text-blue-gray-700 font-roboto font-medium text-md ">No users found!</p> }
+            {filteredUsers?.length > 0 ? filteredUsers.sort((a,b)=> b.id - a.id).map((user)=> <User key={user.id} active={user.username === id} online={user.online} user={user}></User>) : <p className="text-center text-blue-gray-700 font-roboto font-medium text-md ">No users found!</p> }
         </div>
     )
 }

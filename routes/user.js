@@ -35,8 +35,8 @@ router.get("/online",(req,res)=>{
     res.send(getUsers());
 });
 
-router.get("/all/:user", (req, res)=>{
-    const user = req.params.user;
+router.get("/all", (req, res)=>{
+    const user = req.session.userId;
     const sql = "SELECT `username` FROM `users` WHERE NOT `username` = ?";
     connection.query(sql, [user], function(err,allUsers){
         if(err) return res.sendStatus(400);
@@ -44,7 +44,6 @@ router.get("/all/:user", (req, res)=>{
         connection.query(sql2, [user,user], function(err,results){
             if(err || results.length === 0) return res.sendStatus(400);
             const onlineUsers = getUsers();
-            console.log(onlineUsers);
             let returnedUsers =[];
             allUsers.map((user)=> {
                 const userMessage = results.find((u)=> u.username === user.username);
@@ -64,7 +63,18 @@ router.get("/conversations/:user", (req, res)=>{
     const sql = "SELECT m.content, m.id, latest.username FROM messages m JOIN (SELECT MAX(`id`) AS `id`, CASE WHEN m.from = ? THEN m.to WHEN m.from = ? THEN m.to END AS `username` from messages m GROUP BY `username`) latest on m.id=latest.id GROUP BY `username` HAVING username IS NOT NULL";   
     connection.query(sql, [user,user], function(err,results){
         if(err || results.length === 0) return res.sendStatus(400);
-        res.send(results);
+        let allUsers = [];
+        const onlineUsers = getUsers();
+
+        results.map((user)=>{
+            let online = false;
+            if(onlineUsers.find((u)=> u.username === user.username)){
+                online = true;
+            }   
+            allUsers.push({...user,  online: onlineUsers.some((u)=> u.username === user.username)})
+        })
+
+        res.send(allUsers);
     });
 })
 

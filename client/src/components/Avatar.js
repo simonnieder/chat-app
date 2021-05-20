@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Avatar = ({username, online}) => {
+const Avatar = ({username="", online}) => {
     const letter = username.toString().charAt(0).toUpperCase();
     return (
         <div className="relative rounded-full bg-primary-blue w-12 h-12 flex items-center justify-center flex-shrink-0">

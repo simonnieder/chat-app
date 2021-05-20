@@ -59,6 +59,7 @@ app.use("/api", routes)
 io.on('connection', (socket) => {
     socket.on("login", (username)=>{
       userJoin(socket.id, username);
+      socket.broadcast.emit("user-state-change", {username: username, online: true});
       // socket.broadcast.emit("user-online", username);
     });
     socket.on("send-message", (message)=> {
@@ -88,7 +89,7 @@ io.on('connection', (socket) => {
     socket.on("disconnect", ()=>{
       const username = userLeave(socket.id)?.username;
       if(!username)return;
-      socket.broadcast.emit("user-offline", username);
+      socket.broadcast.emit("user-state-change", {username: username, online: false});
     });
 });
 
