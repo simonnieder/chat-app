@@ -20,7 +20,7 @@ const Users = ({id, search}) => {
         setUsers(defaultUsers.filter((user)=> user.username.toLowerCase().includes(search.toLowerCase())))
     },[search])
     return (
-        <div className="space-y-1 scroll" >
+        <div className="space-y-1 scroll pb-1" >
             {users?.length ? users.map((user)=> <User active={id === user.username} user={user}></User>): <p className="text-center text-blue-gray-700 font-roboto font-medium text-md ">No users found!</p>}
         </div>  
     )

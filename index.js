@@ -86,8 +86,9 @@ io.on('connection', (socket) => {
       });
     });
     socket.on("disconnect", ()=>{
-      userLeave(socket.id);
-      // socket.broadcast.emit("user-offline", username);
+      const username = userLeave(socket.id)?.username;
+      if(!username)return;
+      socket.broadcast.emit("user-offline", username);
     });
 });
 

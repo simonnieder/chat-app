@@ -7,10 +7,15 @@ function userJoin(id, username) {
   return user;
 }
 
+
+function getUsers() {
+  return users;
+}
 // Get current user
 function getUserById(id) {
   return users.find(user => user.id === id);
 }
+
 function getUserByUsername(username) {
     return users.find(user => user.username === username);
 }
@@ -29,4 +34,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   userLeave,
+  getUsers,
 };
