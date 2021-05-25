@@ -8,7 +8,6 @@ import InputError from "../InputError"
 const { REACT_APP_API_ENDPOINT } = process.env;
 const Login = () => {
     const [user, setUser] = useContext(UserContext);
-    const history = useHistory();
     const [form, setForm] = useState({
         username: "",
         password: "",
@@ -20,16 +19,15 @@ const Login = () => {
         e.preventDefault();
         setForm({...form, error: "", loading: true});
         axios.post(`${REACT_APP_API_ENDPOINT}/user/login`,form, { withCredentials: true }).then(res=>{
-            setUser(res.data.username);
-            history.push("/");
+            setUser({username: res.data.username, loading: false});
         }).catch((err)=>{
             if(!err.response) return setForm({...form, error: "Server not reachable!"});
-            setForm({...form, error: "Username or password incorrect!",loading: false});
+            setForm({...form, error: err.response.data.error,loading: false});
         })
     }
 
 
-    if(user){
+    if(user.username){
         return <Redirect to="/"></Redirect>
     }
     return (
@@ -40,7 +38,7 @@ const Login = () => {
                 <Input required full value={form.username} onChange={(value)=> setForm({...form, username: value})} title="Username" placeholder="Enter your name"></Input>
                 <Input required full value={form.password} onChange={(value)=> setForm({...form, password: value})} title="Password" type="password" placeholder="Enter your password"></Input>
                 {form.error && <InputError msg={form.error}></InputError>}
-                <Button primary full loading={form.loading}>login</Button>
+                <Button primary full loading={true}>login</Button>
             </form>
         </div>
 

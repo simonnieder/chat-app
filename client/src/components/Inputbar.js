@@ -10,15 +10,22 @@ const Inputbar = ({id}) => {
     const submitForm = (e)=>{
         e.preventDefault();
         let msg = message;
-        msg = msg.trim();
+        msg = msg.trim()
         if(!msg) return setMessage("");
-        socket.emit("send-message", {content: message, to: id, from: user });
+        socket.emit("send-message", {content: msg, to: id, from: user.username });
         setMessage("");
     }
-    
+
+    const onSubmit = (e)=>{
+        if(e.keyCode == 13 && e.shiftKey == false) {
+            e.preventDefault();
+            submitForm(e);
+        }        
+    }
+
     return (
         <form onSubmit={submitForm} className="w-full py-3 space-x-2 justify-center flex flex-nowrap">
-          <Input full placeholder="Type your message" value={message} onChange={setMessage}></Input>
+          <Input onSubmit={onSubmit} maxRows={3} full placeholder="Type your message" value={message} onChange={setMessage}></Input>
           <Button primary><span className="mr-2 hidden md:block">send</span><IoMdSend ></IoMdSend></Button>
         </form>
     )

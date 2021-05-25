@@ -11,7 +11,7 @@ const Conversations = ({id, search}) => {
     const socket = useContext(SocketContext);
 
     useEffect(()=>{
-        axios.get(`${REACT_APP_API_ENDPOINT}/user/conversations/${user}`).then((res)=>{
+        axios.get(`${REACT_APP_API_ENDPOINT}/user/conversations/${user.username}`).then((res)=>{
             setDefaultUsers(res.data);  
             setFilteredUsers(res.data);
         });

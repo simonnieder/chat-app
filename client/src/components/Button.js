@@ -9,7 +9,7 @@ const Button = ({children, onClick, full, submit, primary, outlined, loading, di
         font-semibold 
         h-9 px-5
         focus:outline-none
-        focus:ring
+        focus:ring-2
         ring-primary-blue
         ring-opacity-70
         text-base 
@@ -22,7 +22,7 @@ const Button = ({children, onClick, full, submit, primary, outlined, loading, di
         text-white  
         `}>
             <div className={`${loading && "opacity-0"} flex items-center justify-center` }>{children}</div>
-            {loading&&<Loader></Loader>}
+            {loading && <Loader></Loader>}
         </motion.button>
     )
 }

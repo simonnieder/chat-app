@@ -5,16 +5,20 @@ const { REACT_APP_API_ENDPOINT } = process.env;
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState({
+    username : undefined,
+    loading: false,
+  });
   useEffect(() => {
     if (document.cookie.split("; ").find((row) => row.startsWith("connect.sid="))) {
+      setUser({username: undefined, loading: true});
       axios
         .post(`${REACT_APP_API_ENDPOINT}/user/login`,{}, { withCredentials: true })
         .then((res) => {
-            setUser(res.data.username);
+            setUser({username: res.data.username, loading: false});
         })
         .catch((err) => {
-          setUser(undefined);
+          setUser({username: undefined, loading: false});
         });
     }
   }, []);

@@ -11,7 +11,7 @@ const Users = ({id, search}) => {
     const socket = useContext(SocketContext);
 
     useEffect(()=>{
-        axios.get(`${REACT_APP_API_ENDPOINT}/user/${user}`).then((res)=>{
+        axios.get(`${REACT_APP_API_ENDPOINT}/user/userlist/${user.username}`).then((res)=>{
             setUsers(res.data)
             setDefaultUsers(res.data)
         })

@@ -1,5 +1,4 @@
 import Avatar from "./Avatar"
-import User from "./User"
 import {BsChevronLeft} from "react-icons/bs"
 import { Link } from "react-router-dom"
 const ChatTopBar = ({id, isBigScreen}) => {

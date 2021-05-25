@@ -22,7 +22,7 @@ const Chat = ({id, refresh}) => {
     },[socket, id]);
 
     useEffect(()=>{
-        axios.get(`${REACT_APP_API_ENDPOINT}/chat/${user}/${id}`).then((res)=>{
+        axios.get(`${REACT_APP_API_ENDPOINT}/chat/${user.username}/${id}`).then((res)=>{
             setChat(res.data);
         }).catch((err)=>{
             setChat([]);
@@ -33,7 +33,7 @@ const Chat = ({id, refresh}) => {
         <div className="flex flex-col w-full max-w-3xl flex-1 min-h-0 px-1">
             <div className="overflow-auto scroll flex flex-1 flex-col-reverse overflow-x-hidden">
                 {chat && chat.slice().reverse().map((message, index)=>{
-                    return (<Message message={message} ownMessage={user === message.from} key={index}>{message.content}</Message>);
+                    return (<Message message={message} ownMessage={user.username === message.from} key={index}>{message.content}</Message>);
                 })}
                 {chat.length === 0 && <h1 className="text-center text-xl font-roboto text-gray-500">Type your first message!</h1>}
             </div>

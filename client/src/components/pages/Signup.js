@@ -6,9 +6,9 @@ import Button from "../Button"
 import Input from "../Input"
 import InputError from "../InputError"
 const { REACT_APP_API_ENDPOINT } = process.env;
+const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 const Signup = () => {
     const [user, setUser] = useContext(UserContext);
-    const history = useHistory();
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -19,20 +19,19 @@ const Signup = () => {
     const onSubmit = (e)=>{
         e.preventDefault();
         setForm({...form, error: ""});
-        
-        if(form.password !== form.confirmPassword) return setForm({...form, error: "Passwords don't match!"});
+        if(!EMAIL_REGEX.test(form.email.toLowerCase())) return setForm({...form, error: "Enter a valid email!"});
         if(form.password.length < 8) return setForm({...form, error: "Password too short. Use at least 8 characters"});
+        if(form.password !== form.confirmPassword) return setForm({...form, error: "Passwords don't match!"});
         axios.post(`${REACT_APP_API_ENDPOINT}/user/signup`,form, { withCredentials: true }).then(res=>{
-            setUser(res.data);
-            history.push("/");
+            setUser({username: res.data, loading: false});
         }).catch((err)=>{
             if(!err.response) return setForm({...form, error: "Server not reachable!"});
-            setForm({...form, error: "Username already taken!"});
+            setForm({...form, error: err.response.data.error});
         })
     }
 
 
-    if(user){
+    if(user.username){
         return <Redirect to="/"></Redirect>
     }
 
