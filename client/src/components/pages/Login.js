@@ -38,7 +38,7 @@ const Login = () => {
                 <Input required full value={form.username} onChange={(value)=> setForm({...form, username: value})} title="Username" placeholder="Enter your name"></Input>
                 <Input required full value={form.password} onChange={(value)=> setForm({...form, password: value})} title="Password" type="password" placeholder="Enter your password"></Input>
                 {form.error && <InputError msg={form.error}></InputError>}
-                <Button primary full loading={true}>login</Button>
+                <Button primary full loading={form.loading}>login</Button>
             </form>
         </div>
 
