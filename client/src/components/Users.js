@@ -22,9 +22,10 @@ const Users = ({id, search}) => {
         socket.on("user-state-change", (user)=>{
             setUsers((users)=>{
                 if(!users)return [];
-                const currentUser = users.find((u)=>u.username===user.username);
-                const returnUsers = users.filter((u)=>u.username !== user.username);
-                return [{...currentUser, online: user.online},...returnUsers];
+                const currentIndex = users.findIndex((u)=>u.username===user.username);
+                const newUsers = [...users];
+                newUsers[currentIndex] = {...newUsers[currentIndex], online: user.online }
+                return [...newUsers];
             })
             setDefaultUsers((users)=>{
                 if(!users)return [];

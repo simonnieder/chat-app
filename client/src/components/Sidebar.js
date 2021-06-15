@@ -20,7 +20,7 @@ const Sidebar = ({id, isBigScreen, refresh}) => {
         setSearch("")
     }, [mode, refresh])
     return (
-        <div className={`${isBigScreen && "max-w-xs"} w-full bg-blue-gray-500 bg-opacity-10 space-y-2 flex flex-col flex-1`}>
+        <div className={`${isBigScreen && "max-w-xs"} w-full bg-blue-gray-500 bg-opacity-10 space-y-2 flex flex-col`}>
             <div className="flex items-center justify-between h-20 px-5 border-b border-gray-300 flex-shrink-0">
                 <div className="flex items-center">
                     <Avatar username={user.username} online status></Avatar>
@@ -28,14 +28,14 @@ const Sidebar = ({id, isBigScreen, refresh}) => {
                 </div>
             </div>
             <div className="space-y-3 flex flex-col min-h-0 p-5 h-full">
-                <div className="flex items-center justify-center bg-blue-gray-700 bg-opacity-10 rounded-xl p-1 space-x-1">                
+                <div className="flex items-center justify-center bg-blue-gray-700 bg-opacity-10 rounded-lg p-1 space-x-1">                
                     <TabSwitcher mode={"conversations"} currentMode={mode} onClick={()=>setMode("conversations")}></TabSwitcher>
                     <TabSwitcher mode={"users"} currentMode={mode} onClick={()=>setMode("users")}></TabSwitcher>
                 </div>
                 <Input full search value={search} onChange={setSearch} placeholder={mode === "conversations" ? "Search for conversations" : "Search for users"}></Input>
                 <div className="overflow-y-auto flex-1 scroll">
                     {mode === "conversations" ? 
-                    <Conversations id={id} search={search}></Conversations>: 
+                    <Conversations id={id} search={search} refresh={refresh}></Conversations>: 
                     <Users id={id} search={search}></Users>}
                 </div>
                 <div className="">

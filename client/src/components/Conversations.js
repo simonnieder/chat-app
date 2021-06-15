@@ -4,7 +4,7 @@ import { SocketContext } from "../Context/SocketContext";
 import { UserContext } from "../Context/UserContext";
 import User from "./User";
 const { REACT_APP_API_ENDPOINT } = process.env;
-const Conversations = ({id, search}) => {
+const Conversations = ({id, search, refresh}) => {
     const [defaultUsers, setDefaultUsers] = useState();
     const [filteredUsers, setFilteredUsers] = useState();
     const [user] = useContext(UserContext);
@@ -15,7 +15,7 @@ const Conversations = ({id, search}) => {
             setDefaultUsers(res.data);  
             setFilteredUsers(res.data);
         });
-    },[])
+    },[refresh])
 
     useEffect(()=>{
         if(!socket) return;
