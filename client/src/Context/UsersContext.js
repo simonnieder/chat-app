@@ -7,15 +7,19 @@ export const UsersContext = createContext();
 export const UsersProvider = (props) => {
   const [users, setUsers] = useState(undefined);
   useEffect(() => {
-      axios
-        .get(`${REACT_APP_API_ENDPOINT}/user/all`, { withCredentials: true })
-        .then((res) => {
-            setUsers(res.data);
-        })
-        .catch((err) => {
-          setUsers(undefined);
-        });
+    axios
+      .get(`${REACT_APP_API_ENDPOINT}/user/all`, { withCredentials: true })
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        setUsers(undefined);
+      });
   }, []);
 
-  return <UsersContext.Provider value={[users, setUsers]}>{props.children}</UsersContext.Provider>;
+  return (
+    <UsersContext.Provider value={[users, setUsers]}>
+      {props.children}
+    </UsersContext.Provider>
+  );
 };

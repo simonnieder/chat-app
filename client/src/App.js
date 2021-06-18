@@ -9,11 +9,11 @@ import Routes from "./Routes";
 function App() {
   return (
     <div className="App antialiased">
-        <UserProvider>
-            <BrowserRouter>
-              <Routes/>
-            </BrowserRouter>
-        </UserProvider>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </UserProvider>
     </div>
   );
 }
